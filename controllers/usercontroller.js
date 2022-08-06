@@ -4,32 +4,32 @@ var ObjectId = require('mongodb').ObjectID;
 const saltRounds = 10;
 const coursemodel = require('../models/coursemodel');
 var qaModel = require('../models/quizassignmodel')
-const { GridFsStorage } = require('multer-gridfs-storage');
+//const { GridFsStorage } = require('multer-gridfs-storage');
 const multer = require('multer');
 //I used an mlab Sandbox DB. Substitute the details with your own
 const url = `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.9zwax.mongodb.net/${process.env.DB_NAME}?retryWrites=true`;
 const dbName = process.env.DB_NAME;
 
-let storage = new GridFsStorage({
-  url: `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.9zwax.mongodb.net/${process.env.DB_NAME}?retryWrites=true`,
-  file: (req, file) => {
-    return {
-      bucketName: 'images',       //Setting collection name, default name is fs
-      filename: file.originalname     //Setting file name to original name of file
-    }
-  }
-});
+// let storage = new GridFsStorage({
+//   url: `mongodb+srv://${process.env.USER}:${process.env.PASS}@cluster0.9zwax.mongodb.net/${process.env.DB_NAME}?retryWrites=true`,
+//   file: (req, file) => {
+//     return {
+//       bucketName: 'images',       //Setting collection name, default name is fs
+//       filename: file.originalname     //Setting file name to original name of file
+//     }
+//   }
+// });
 
-let upload = null;
+// let upload = null;
 
-storage.on('connection', (db) => {
-  console.log("connected.. ");
-  //Setting up upload for a single file
-  upload = multer({
-    storage: storage
-  }).single('file1');
+// storage.on('connection', (db) => {
+//   console.log("connected.. ");
+//   //Setting up upload for a single file
+//   upload = multer({
+//     storage: storage
+//   }).single('file1');
 
-});
+// });
 async function getCourses(req, res) {
   const filter = {};
   const all = await coursemodel.find(filter).populate('courseteacher');
